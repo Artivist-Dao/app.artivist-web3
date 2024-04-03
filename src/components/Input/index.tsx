@@ -20,9 +20,9 @@ interface InputProps {
   minLength?: number;
   readonly?: boolean;
   hasError?: boolean;
-  maskType: (string | RegExp)[];
-  onChangeText?: (text: string) => void;
-  secureTextEntry: boolean;
+  maskType?: (string | RegExp)[];
+  onChangeText?: (masked: string, unmasked: string) => void;
+  secureTextEntry?: boolean;
   messageError?: string;
 }
 
