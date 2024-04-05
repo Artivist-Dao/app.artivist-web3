@@ -1,5 +1,23 @@
 ﻿# APP MOBILE WEB3
 
+npm install -g expo-cli
+npm install -g @expo/ngrok@4.1.0
+npm cache clean --force
+
+
+npm install -g react-native-cli
+npm install -g react-native
+npm install -g react-native-web3
+npm install -g react-native-web3-provider
+npm install -g react-native-web3-dapp
+npm install -g react-native-web3-provider
+
+start:
+
+npx expo start --tunnel -c
+
+---
+
 Nome do Projeto
 Este é um breve resumo do seu projeto. Descreva o que é o projeto e o que ele faz.
 
@@ -27,3 +45,11 @@ Pull requests são bem-vindos. Para mudanças importantes, por favor, abra uma i
 
 Licença
 MIT
+
+---
+
+Links Úteis :
+
+* Repo oficial : https://github.com/Artivist-Dao/app.artivist-web3
+* Docs Expo : https://docs.expo.dev/guides/authentication/#github
+*

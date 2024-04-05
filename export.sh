@@ -1,39 +1,36 @@
 #!/bin/bash
 
-# Nome do arquivo de saída
-arquivo_saida="APP_MOBILE_WEB3.txt"
+# Prefixo do nome do arquivo de saída
+prefixo_arquivo_saida="APP_MOBILE_WEB3"
 
-# Limpa o arquivo de saída ou cria se não existir
+# Inicializa contador de arquivo
+contador_arquivo=1
+
+# Tamanho máximo do arquivo em kilobytes (15MB)
+max_tamanho_kb=$((15*1024))
+
+# Inicia um novo arquivo de saída
+arquivo_saida="${prefixo_arquivo_saida}_${contador_arquivo}.txt"
 > "$arquivo_saida"
 
-# Tamanho máximo do arquivo em kilobytes
-max_tamanho_kb=15
+# Processa cada arquivo
+find . -type f -print0 | while IFS= read -r -d '' file; do
+    tamanho_arquivo_kb=$(du -k "$file" | cut -f1)
 
-# Constrói uma string com os padrões de exclusão baseados no .gitignore e exclui a pasta .git
-exclusoes="-not -path './.git*'"
-if [ -f .gitignore ]; then
-    while read line; do
-        # Ignora linhas vazias e comentários no .gitignore
-        if [ ! -z "$line" ] && [ ! ${line:0:1} == "#" ]; then
-            # Adiciona o padrão à string de exclusão
-            exclusoes="$exclusoes -not -path './$line'"
-        fi
-    done < .gitignore
-fi
-
-# Encontra todos os arquivos (ignorando diretórios, .git e excluindo padrões do .gitignore) e processa cada um
-eval "find . -type f $exclusoes" | while read file; do
-    tamanho_kb=$(du -k "$file" | cut -f1)
-    if [ $tamanho_kb -le $max_tamanho_kb ]; then
-        echo "Caminho do arquivo: $file" >> "$arquivo_saida"
-        echo "Conteúdo em base64:" >> "$arquivo_saida"
-        base64 "$file" >> "$arquivo_saida"
-        echo -e "\n\n" >> "$arquivo_saida"
-    else
-        echo "Caminho do arquivo: $file" >> "$arquivo_saida"
-        echo "Erro: arquivo excede o limite de tamanho de 15KB" >> "$arquivo_saida"
-        echo -e "\n\n" >> "$arquivo_saida"
+    # Verifica se é necessário iniciar um novo arquivo devido ao tamanho
+    tamanho_atual_kb=$(du -k "$arquivo_saida" | cut -f1)
+    if [ $((tamanho_atual_kb + tamanho_arquivo_kb)) -ge $max_tamanho_kb ]; then
+        contador_arquivo=$((contador_arquivo+1))
+        arquivo_saida="${prefixo_arquivo_saida}_${contador_arquivo}.txt"
+        > "$arquivo_saida"
     fi
+
+    # Adiciona o conteúdo do arquivo ao arquivo de saída
+    echo "Caminho do arquivo: $file" >> "$arquivo_saida"
+    echo "Conteúdo do arquivo:" >> "$arquivo_saida"
+    cat "$file" >> "$arquivo_saida"
+    echo -e "\n\n" >> "$arquivo_saida"
+
 done
 
-echo "Conteúdo dos arquivos em base64 exportado para $arquivo_saida"
+echo "Conteúdo dos arquivos exportado para arquivos iniciando com $prefixo_arquivo_saida"
