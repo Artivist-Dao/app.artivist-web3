@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "../components/Button";
-import * as ImagePicker from "expo-image-picker";
 import Wrapper from "../layouts/wrapper";
 import LogoPrimary from "../../assets/brand/logoPrimary.png";
-import Cubo from "../../assets/img/cub.png";
-import Input from "../components/Input";
 import H6 from "../components/Titles/H6";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GoBack from "../components/GoBack";
-import Categories from "../components/Categories";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 import GetAllStorageCreateNGO from "../hooks/useGetAllStorageCreateNGO";
 import Subtitle from "../components/Titles/Subtitle";
+import ModalTester from "../components/Modal";
 
 export function CreateCampaignNFTFinish({ navigation }) {
   const [campaignNft, setcampaignNft] = useState<string | null>(null);
@@ -23,12 +20,14 @@ export function CreateCampaignNFTFinish({ navigation }) {
   const [categorie, setCategorie] = useState("");
   const [pictureNGO, setPictureNGO] = useState("");
   const [nameNGO, setNameNGO] = useState("");
+  const [nameNFT, setNameNFT] = useState("");
   const [local, setLocal] = useState("");
   const [nameArtist, setNameArtist] = useState("");
   const [localArtist, setLocalArtist] = useState("");
   const [pictureArtist, setPictureArtist] = useState("");
   const [typeNft, setTypeNft] = useState("");
   const [quantityNft, setQuantityNft] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const cancelCreateNFT = async () => {
     await AsyncStorage.removeItem("categoryCreateCampaign");
@@ -42,7 +41,6 @@ export function CreateCampaignNFTFinish({ navigation }) {
     await AsyncStorage.removeItem("limitedQuantityNftCreateCampaign");
     navigation.navigate("HomeNGO");
   };
-
   const format = (value) => {
     const strValue = String(value);
 
@@ -58,9 +56,11 @@ export function CreateCampaignNFTFinish({ navigation }) {
   }, []);
 
   const getStorageCreateCampaign = async () => {
+    setNameNFT(await AsyncStorage.getItem("companyTitleCreateCampaign"));
     setCategorie(await AsyncStorage.getItem("categoryCreateCampaign"));
     setcampaignNft(await AsyncStorage.getItem("pictureNftCreateCampaign"));
     setValueNFT(await AsyncStorage.getItem("valueNftCreateCampaign"));
+
     setDescription(await AsyncStorage.getItem("descriptionCreateCampaign"));
     setNameArtist(await AsyncStorage.getItem("nameArtistsCreateCampaign"));
     setLocalArtist(await AsyncStorage.getItem("localArtistsCreateCampaign"));
@@ -68,14 +68,27 @@ export function CreateCampaignNFTFinish({ navigation }) {
       await AsyncStorage.getItem("pictureArtistsCreateCampaign")
     );
     setTypeNft(await AsyncStorage.getItem("typeQuatityNftCreateCampaign"));
-    setQuantityNft(await AsyncStorage.getItem("limitedQuantityNftCreateCampaign"))
+    setQuantityNft(
+      await AsyncStorage.getItem("limitedQuantityNftCreateCampaign")
+    );
     const response = await GetAllStorageCreateNGO();
     setPictureNGO(response.picture);
     setNameNGO(response.corporateName);
-    setLocal(response.postalCode);
+    setLocal(response.city);
   };
-
-  const handleSubmit = async () => {};
+  const handleShow = () => {
+    setShowModal(false);
+    navigation.navigate("HomeNGO");
+  };
+  const handleSubmit = () => {
+    setLoader(true);
+    setShowModal(true);
+    setLoader(false);
+  };
+  const calcValueNFT = (valueNFT: number) => {
+    const valueInSolana = valueNFT * 929.03;
+    return valueInSolana;
+  };
 
   return (
     <>
@@ -91,7 +104,7 @@ export function CreateCampaignNFTFinish({ navigation }) {
           <Text className="font-medium text-sm text-[#4B4B4B]">
             Check how your campaign it will be seen
           </Text>
-          <H6 Title={categorie + " Power"} />
+          <H6 Title={nameNFT} />
         </View>
         <View className="justify-center items-center mt-6 mb-6">
           <View className="h-80 w-80 bg-marca2 items-center rounded-2xl justify-center">
@@ -111,9 +124,14 @@ export function CreateCampaignNFTFinish({ navigation }) {
             </Text>
           </View>
           <View className="">
+            <Text>
+              
+            </Text>
             <Subtitle
-              ClassName="w-52 text-right"
-              Title={format(valueNFT) + " SOL/ " + " 37.19 $"}
+              ClassName="w-56 text-right"
+              Title={`${format(valueNFT)} SOL / ${calcValueNFT(
+                parseFloat(valueNFT)
+              )} $`}
             />
             {typeNft === "Unlimited" ? (
               <Text className="text-right text-normal text-cinza1 text-base mt-1">
@@ -197,6 +215,8 @@ export function CreateCampaignNFTFinish({ navigation }) {
           </View>
         </WrapperNotScroll>
       </TouchableOpacity>
+
+      <ModalTester show={showModal} onClose={handleShow} />
     </>
   );
 }
