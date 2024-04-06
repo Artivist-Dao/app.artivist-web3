@@ -4,21 +4,17 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  TextInput,
-  StyleSheet,
 } from "react-native";
 import { Button } from "../components/Button";
 import * as ImagePicker from "expo-image-picker";
 import Wrapper from "../layouts/wrapper";
-import LogoPimary from "../../assets/brand/logoPrimary.png";
 import Input from "../components/Input";
 import H6 from "../components/Titles/H6";
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import useCreateNGO from "../hooks/useCreateNGO";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 
-export function CadasterFirstAcess({ navigation }) {
+export default function CadasterFirstAcess({ navigation }) {
   const [corporatePhoto, setCorporatePhoto] = useState<string | null>(null);
   const [coporateName, setCoporateName] = useState("");
   const [city, setCity] = useState("");
@@ -26,7 +22,8 @@ export function CadasterFirstAcess({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
-
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
+  
   const {
     loader,
     setLoader,
@@ -113,7 +110,7 @@ export function CadasterFirstAcess({ navigation }) {
     <>
       <Wrapper>
         <View className="flex-row justify-between items-center">
-          <Image className="h-20 w-32" source={LogoPimary} />
+           <Image className="h-20 w-32" source={LogoPrimary} /> 
           <View className="flex-row">
             <View className="bg-cinza2 w-5 h-5 rounded-full m-1"></View>
             <View className="bg-dark3 w-5 h-5 rounded-full m-1"></View>
@@ -148,7 +145,7 @@ export function CadasterFirstAcess({ navigation }) {
               style={{ shadowOpacity: 0.1, shadowRadius: 3.84, elevation: 5 }}
             >
               {!corporatePhoto ? (
-              <Feather name="plus" size={24} color="#1B941F" />         
+                <Feather name="plus" size={24} color="#1B941F" />
               ) : (
                 <Feather name="edit-2" size={24} color="#1B941F" />
               )}
@@ -181,8 +178,8 @@ export function CadasterFirstAcess({ navigation }) {
           value={phoneNumber}
           onChangeText={(masked, unmasked) => handlePhoneNumber(unmasked)}
           placeholder="Phone Number"
-          maskType="PHONE"
           type="number"
+          maxLength={11}
         />
         <Input
           value={description}
@@ -190,15 +187,14 @@ export function CadasterFirstAcess({ navigation }) {
           placeholder="Description"
           maxLength={150}
         />
-       
       </Wrapper>
       <View className="bg-branco absolute bottom-0 justify-center right-0 left-0">
         <WrapperNotScroll>
-        {message && (
-          <Text className="text-center py-2 text-error text-sm font-light">
-            {message}
-          </Text>
-        )}
+          {message && (
+            <Text className="text-center py-2 text-error text-sm font-light">
+              {message}
+            </Text>
+          )}
           <Button
             hasIcon
             styleType={2}

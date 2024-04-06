@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactNode } from "react";
 import { TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 

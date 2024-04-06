@@ -3,8 +3,6 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "../components/Button";
 import * as ImagePicker from "expo-image-picker";
 import Wrapper from "../layouts/wrapper";
-import LogoPrimary from "../../assets/brand/logoPrimary.png";
-import Cubo from "../../assets/img/cub.png";
 import Input from "../components/Input";
 import H6 from "../components/Titles/H6";
 import { Feather } from "@expo/vector-icons";
@@ -13,13 +11,15 @@ import GoBack from "../components/GoBack";
 import Categories from "../components/Categories";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 
-export function CreateCampaignNFT({ navigation }) {
+export default function CreateCampaignNFT({ navigation }) {
   const [campaignNft, setcampaignNft] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState("");
   const [suggestValue, setSuggestValue] = useState("");
   const [limitedQuantity, setLimitedQuantity] = useState("");
   const [message, setMessage] = useState("");
   const [loader, setLoader] = useState(false);
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
+  const Cubo = require("../../assets/img/cub.png");
 
   const handleSelectItem = (title) => {
     setSelectedItem(title);
@@ -175,7 +175,6 @@ export function CreateCampaignNFT({ navigation }) {
             value={suggestValue}
             onChangeText={(masked, unmasked) => handleSuggestValue(unmasked)}
             placeholder="Suggest a Value"
-            maskType={"SOL"}
             maxLength={4}
             type="number"
           />

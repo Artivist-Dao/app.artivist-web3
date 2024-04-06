@@ -4,11 +4,9 @@ import Wrapper from "../layouts/wrapper";
 import GoBack from "../components/GoBack";
 import H6 from "../components/Titles/H6";
 import Input from "../components/Input";
-import LogoPrimary from "../../assets/brand/logoPrimary.png";
 import { Button } from "../components/Button";
 import CardsSearchArtist from "../components/CardsSearchArtist";
 import { Feather } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 
@@ -18,6 +16,7 @@ export default function CreateCampaignInvite({ navigation }) {
   const [loader, setLoader] = useState(false);
   const [filteredArtists, setFilteredArtists] = useState([]);
   const [selectedArtist, setSelectedArtist] = useState(null);
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
   const [artists, setArtists] = useState([
     {
       id: 1,
@@ -147,7 +146,7 @@ export default function CreateCampaignInvite({ navigation }) {
             maxLength={40}
           />
         </View>
-        
+
         {search !== "" && (
           <>
             {filteredArtists.map((artist, index) => (

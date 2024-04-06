@@ -2,20 +2,20 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import { Button } from "../components/Button";
 import Wrapper from "../layouts/wrapper";
-import Hand from "../../assets/img/hand.png";
-import Phone from "../../assets/img/phone.png";
-import Verify from "../../assets/img/verify.png";
-import LogoPimary from "../../assets/brand/logoPrimary.png";
 import { SubButton } from "../components/SubButton";
 import H6 from "../components/Titles/H6";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 
-export function FirstAcess({ navigation }) {
+export default function FirstAcess({ navigation }) {
+  const Hand = require("../../assets/img/hand.png");
+  const Phone = require("../../assets/img/phone.png");
+  const Verify = require("../../assets/img/verify.png");
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
   return (
     <>
       <Wrapper>
         <View className="flex-row justify-between items-center">
-          <Image className="h-20 w-32" source={LogoPimary} />
+          <Image className="h-20 w-32" source={LogoPrimary} /> 
           <View className="flex-row">
             <View className="bg-dark3 w-5 h-5 rounded-full m-1"></View>
             <View className="bg-cinza2 w-5 h-5 rounded-full m-1"></View>
@@ -34,7 +34,7 @@ export function FirstAcess({ navigation }) {
           </View>
 
           <View className="p-3 mt-5 flex-row items-center border-maindark border rounded-2xl">
-            <Image className="" source={Hand} />
+            <Image className="" source={Hand} /> 
             <Text className="ml-2 w-64 mt-2 text-sm font-bold">
               Invite an artist into partnership or approve the artwork of an
               artist who want to help
@@ -42,7 +42,7 @@ export function FirstAcess({ navigation }) {
           </View>
 
           <View className="p-3 mt-5 flex-row items-center border-maindark border rounded-2xl">
-            <Image className="" source={Phone} />
+           <Image className="" source={Phone} /> 
             <Text className="ml-2 w-64 mt-2 text-sm font-bold">
               Sell NFTs that will raise funds and propagate the cause that the
               NGO defends.

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "../components/Button";
 import Wrapper from "../layouts/wrapper";
-import LogoPrimary from "../../assets/brand/logoPrimary.png";
 import H6 from "../components/Titles/H6";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,8 +11,8 @@ import GetAllStorageCreateNGO from "../hooks/useGetAllStorageCreateNGO";
 import Subtitle from "../components/Titles/Subtitle";
 import ModalTester from "../components/Modal";
 
-export function CreateCampaignNFTFinish({ navigation }) {
-  const [campaignNft, setcampaignNft] = useState<string | null>(null);
+export default function CreateCampaignNFTFinish({ navigation }) {
+  const [campaignNft, setcampaignNft] = useState<string | null>("");
   const [description, setDescription] = useState("");
   const [valueNFT, setValueNFT] = useState("");
   const [loader, setLoader] = useState(false);
@@ -28,6 +27,7 @@ export function CreateCampaignNFTFinish({ navigation }) {
   const [typeNft, setTypeNft] = useState("");
   const [quantityNft, setQuantityNft] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
 
   const cancelCreateNFT = async () => {
     await AsyncStorage.removeItem("categoryCreateCampaign");
@@ -107,12 +107,14 @@ export function CreateCampaignNFTFinish({ navigation }) {
           <H6 Title={nameNFT} />
         </View>
         <View className="justify-center items-center mt-6 mb-6">
-          <View className="h-80 w-80 bg-marca2 items-center rounded-2xl justify-center">
-            <Image
-              className="h-full w-full rounded-2xl"
-              source={{ uri: campaignNft }}
-            />
-          </View>
+          {campaignNft && (
+            <View className="h-80 w-80 bg-marca2 items-center rounded-2xl justify-center">
+              <Image
+                className="h-full w-full rounded-2xl"
+                source={{ uri: campaignNft }}
+              />
+            </View>
+          )}
         </View>
         <View className="flex-row items-center justify-between">
           <View
@@ -124,9 +126,7 @@ export function CreateCampaignNFTFinish({ navigation }) {
             </Text>
           </View>
           <View className="">
-            <Text>
-              
-            </Text>
+            <Text></Text>
             <Subtitle
               ClassName="w-56 text-right"
               Title={`${format(valueNFT)} SOL / ${calcValueNFT(
