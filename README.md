@@ -1,5 +1,11 @@
 ﻿# APP MOBILE WEB3
 
+npx eas build -p android
+
+## Local build
+
+npx eas build --local -p android
+
 npm install -g expo-cli
 npm install -g @expo/ngrok@4.1.0
 npm cache clean --force
@@ -15,6 +21,7 @@ npm install -g react-native-web3-provider
 start:
 
 npx expo start --tunnel -c
+npx expo start --clear
 
 ---
 
