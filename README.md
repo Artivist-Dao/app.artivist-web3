@@ -1,62 +1,81 @@
-﻿# APP MOBILE WEB3
+# Guia de Configuração e Execução do APP MOBILE WEB3 no MAC
 
-npx eas build -p android
+Este guia tem como objetivo auxiliar iniciantes na configuração e execução do projeto APP MOBILE WEB3 em um ambiente Mac.
 
-## Local build
+## Índice
 
-npx eas build --local -p android
+- [Pré-requisitos](#pré-requisitos)
+- [Configuração do Ambiente](#configuração-do-ambiente)
+- [Execução do App](#execução-do-app)
+- [Problemas Comuns e Soluções](#problemas-comuns-e-soluções)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-npm install -g expo-cli
-npm install -g @expo/ngrok@4.1.0
-npm cache clean --force
+## Pré-requisitos
 
+Antes de começar, você precisará instalar:
+- Node.js
+- Yarn (opcional, pode-se usar npm)
+- Expo CLI
 
-npm install -g react-native-cli
-npm install -g react-native
-npm install -g react-native-web3
-npm install -g react-native-web3-provider
-npm install -g react-native-web3-dapp
-npm install -g react-native-web3-provider
+## Configuração do Ambiente
 
-start:
+1. **Instalar Dependências do React Native:**
+   ```bash
+   npm install -g react-native-cli
+   npm install -g react-native
+   ```
 
-npx expo start --tunnel -c
-npx expo start --clear
+2. **Instalar o Expo CLI e Ferramentas Relacionadas:**
+   ```bash
+   npm install -g expo-cli
+   npm install -g @expo/ngrok@4.1.0
+   npm install -g eas-cli
+   ```
 
----
+3. **Limpar o Cache do npm:**
+   ```bash
+   npm cache clean --force
+   ```
 
-Nome do Projeto
-Este é um breve resumo do seu projeto. Descreva o que é o projeto e o que ele faz.
+## Execução do App
 
-Pré-requisitos
-Antes de começar, certifique-se de ter o seguinte instalado:
+- **Iniciar o Projeto com Expo:**
+  ```bash
+  npx expo start --tunnel -c
+  ```
 
-Node.js
-Yarn
-Expo CLI
-Instalação
-Siga estas etapas para instalar e executar o projeto:
+- **Executar Localmente para Android:**
+  ```bash
+  npx eas build --local -p android
+  ```
 
-Clone o repositório:
->
-Navegue até o diretório do projeto:
->
-Instale as dependências do projeto:
-install
-Inicie o servidor de desenvolvimento:
-c
-Agora você pode abrir o aplicativo Expo no seu telefone e escanear o código QR fornecido no terminal ou na página da web que foi aberta. Seu aplicativo deve ser carregado em seu dispositivo.
+## Problemas Comuns e Soluções
 
-Contribuindo
-Pull requests são bem-vindos. Para mudanças importantes, por favor, abra uma issue primeiro para discutir o que você gostaria de mudar.
+1. **DeprecationWarning do Punycode:**
+   - Aviso de obsolescência do módulo `punycode`.
+   - Solução: Substitua o uso do módulo `punycode` ou atualize pacotes de terceiros que o utilizam.
 
-Licença
-MIT
+2. **Incompatibilidade de Versões do Gradle e Java:**
+   - Verifique a versão do Java e do Gradle:
+     ```bash
+     java -version
+     gradle --version
+     ```
+   - Solução: Garanta que as versões do Java e do Gradle sejam compatíveis.
 
----
+3. **Problemas ao Inicializar o Gradle:**
+   - Erro ao executar `gradle wrapper`.
+   - Solução: Execute `gradle init` e configure o projeto Gradle.
 
-Links Úteis :
+4. **Problemas ao Executar o Projeto no Expo:**
+   - Dificuldades ao tentar executar o projeto com o Expo.
+   - Solução: Siga as instruções de configuração do Expo CLI e verifique a conectividade de rede.
 
-* Repo oficial : https://github.com/Artivist-Dao/app.artivist-web3
-* Docs Expo : https://docs.expo.dev/guides/authentication/#github
-*
+## Contribuição
+
+Contribuições são bem-vindas. Para mudanças significativas, por favor, abra uma issue primeiro para discutir o que você gostaria de mudar.
+
+## Licença
+
+Este projeto está sob a licença MIT.
