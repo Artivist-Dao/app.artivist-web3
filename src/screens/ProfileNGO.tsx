@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "../components/Button";
 import Wrapper from "../layouts/wrapper";
-import LogoPrimary from "../../assets/brand/logoPrimary.png";
-import { SubButton } from "../components/SubButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import GetAllStorageCreateNGO from "../hooks/useGetAllStorageCreateNGO";
-import GoBack from "../components/GoBack";
 import Subtitle from "../components/Titles/Subtitle";
 import { AntDesign } from "@expo/vector-icons";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 import { LinearGradient } from "expo-linear-gradient";
 
-export function ProfileNGO({ navigation }) {
+export default function ProfileNGO({ navigation }) {
   const [corporatePhoto, setCorporatePhoto] = useState<string | null>(null);
   const [corporateName, setCorporateName] = useState("");
   const [city, setCity] = useState("");
@@ -21,8 +18,10 @@ export function ProfileNGO({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [description, setDescription] = useState("");
   const [nameArtist, setNameArtist] = useState("");
-  const [pictureArtist, setPictureArtist] = useState("");
-  const [pictureNGO, setPictureNGO] = useState("");
+  const [pictureArtist, setPictureArtist] = useState(null);
+  const [pictureNGO, setPictureNGO] = useState(null);
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
+
 
   const getAllStorageCreateNGO = async () => {
     try {

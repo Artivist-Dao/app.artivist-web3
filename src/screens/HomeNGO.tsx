@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Button } from "../components/Button";
 import Wrapper from "../layouts/wrapper";
-import LogoPrimary from "../../assets/brand/logoPrimary.png";
 import { Feather } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import GetAllStorageCreateNGO from "../hooks/useGetAllStorageCreateNGO";
 import Subtitle from "../components/Titles/Subtitle";
 import Input from "../components/Input";
-import Umar from "../../assets/img/umar.png";
-import Menu from "../../assets/img/menu.png";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 import ModalBottom from "../components/ModalBottom";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 
-export function HomeNGO({ navigation }) {
+export default function HomeNGO({ navigation }) {
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
+  const Umar = require("../../assets/img/umar.png");
+  const Menu = require("../../assets/img/menu.png");
   const [corporatePhoto, setCorporatePhoto] = useState<string | null>(null);
   const [corporateName, setCorporateName] = useState("");
   const [address, setAddress] = useState("");
@@ -63,11 +63,10 @@ export function HomeNGO({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       getAllStorageCreateNGO();
+      getStorageCreateCampaign();
     }, [navigation])
   );
-  useEffect(() => {
-    getStorageCreateCampaign();
-  }, []);
+
   const handleSearch = (unmasked) => {
     setSearch(unmasked);
   };
@@ -78,9 +77,9 @@ export function HomeNGO({ navigation }) {
     <>
       <Wrapper>
         <View className="mt-8 justify-between flex-row items-center">
-          <Image className="h-10 w-32" source={LogoPrimary} />
+          <Image className="h-10 w-32" source={LogoPrimary} /> 
           <TouchableOpacity onPress={() => handleShow()}>
-            <Image className="h-10 w-10" source={Menu} />
+            <Image className="h-10 w-10" source={Menu} /> 
           </TouchableOpacity>
         </View>
 
@@ -110,34 +109,36 @@ export function HomeNGO({ navigation }) {
         <View>
           <Text className="text-dark1 font-bold text-lg mb-2">Campaigns</Text>
           <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-         
             <View>
-            {pictureNGO && (
-            
-              <View className="w-60 h-60 relative mr-6">
-                <Image
-                  className="h-full w-full rounded-2xl"
-                  source={{
-                    uri: pictureNGO,
-                  }}
-                />
-                <LinearGradient
-                  colors={["rgba(0,0,0,0.9)", "rgba(0,0,0,0.0)", "transparent"]}
-                  start={{ x: 0.5, y: 1 }}
-                  end={{ x: 0.5, y: 0 }}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 16,
-                  }}
-                />
-              </View>
-            )}
+              {pictureNGO && (
+                <View className="w-60 h-60 relative mr-6">
+                  <Image
+                    className="h-full w-full rounded-2xl"
+                    source={{
+                      uri: pictureNGO,
+                    }}
+                  />
+                  <LinearGradient
+                    colors={[
+                      "rgba(0,0,0,0.9)",
+                      "rgba(0,0,0,0.0)",
+                      "transparent",
+                    ]}
+                    start={{ x: 0.5, y: 1 }}
+                    end={{ x: 0.5, y: 0 }}
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 16,
+                    }}
+                  />
+                </View>
+              )}
               <View className="absolute right-6">
                 <View
                   className="bg-maindark"
@@ -437,7 +438,10 @@ export function HomeNGO({ navigation }) {
                 onPress={() => navigation.navigate("ProfileNGO")}
               >
                 <Feather name="user" size={24} color="#191919" />
-                <Subtitle ClassName="ml-6 w-60 justify-center items-center" Title={"Profile"} />
+                <Subtitle
+                  ClassName="ml-6 w-60 justify-center items-center"
+                  Title={"Profile"}
+                />
               </TouchableOpacity>
               <View className="h-1  bg-cinza2 w-full rounded-full"></View>
               <TouchableOpacity

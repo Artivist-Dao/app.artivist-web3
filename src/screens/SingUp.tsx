@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import Wrapper from "../layouts/wrapper";
 import Input from "../components/Input";
 import { Button } from "../components/Button";
@@ -8,7 +8,7 @@ import GoBack from "../components/GoBack";
 import H6 from "../components/Titles/H6";
 import useCreateUser from "../hooks/useCreateUser";
 
-export function SingUp({ navigation }) {
+export default function SingUp({ navigation }) {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [messageError, setMessageError] = useState("");

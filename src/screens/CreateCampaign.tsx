@@ -1,14 +1,11 @@
-// CreateCampaign.tsx
 import React, { useState } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import Wrapper from "../layouts/wrapper";
 import GoBack from "../components/GoBack";
 import H6 from "../components/Titles/H6";
 import Input from "../components/Input";
-import LogoPrimary from "../../assets/brand/logoPrimary.png";
 import { Button } from "../components/Button";
 import Categories from "../components/Categories";
-import Header from "../components/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WrapperNotScroll from "../layouts/wrapperNotScroll";
 
@@ -18,6 +15,7 @@ export default function CreateCampaign({ navigation }) {
   const [selectedItem, setSelectedItem] = useState("");
   const [message, setMessage] = useState("");
   const [loader, setLoader] = useState(false);
+  const LogoPrimary = require("../../assets/brand/logoPrimary.png");
 
   const handleSelectItem = (title) => {
     setSelectedItem(title);

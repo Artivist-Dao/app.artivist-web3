@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Text, View, Image, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import Subtitle from "../Titles/Subtitle";
-import Women from "../../../assets/img/women.png";
 import WrapperNotScroll from "../../layouts/wrapperNotScroll";
 import { Feather } from "@expo/vector-icons";
 
@@ -15,6 +14,8 @@ export default function ModalTester({
   show,
   onClose,
 }: ModalTesterProps): JSX.Element {
+  const Women = require("../../../assets/img/women.png");
+
   return (
     <View className="flex-1 ">
       <Modal isVisible={show}>

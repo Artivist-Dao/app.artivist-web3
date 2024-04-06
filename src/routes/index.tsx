@@ -1,18 +1,18 @@
+import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SingUp } from "../screens/SingUp";
-import { Home } from "../screens/Home";
-import { ProfileNGO } from "../screens/ProfileNGO";
+import SingUp from "../screens/SingUp";
+import Home from "../screens/Home";
+import ProfileNGO from "../screens/ProfileNGO";
 import Login from "../screens/Login";
 import CreateCampaign from "../screens/CreateCampaign";
-import { FirstAcess } from "../screens/FirstAcess";
-import { CadasterFirstAcess } from "../screens/CadasterFirstAcess";
-import { useEffect, useState } from "react";
+import FirstAcess from "../screens/FirstAcess";
+import CadasterFirstAcess from "../screens/CadasterFirstAcess";
 import Loader from "../screens/Loader";
-import { HomeNGO } from "../screens/HomeNGO";
+import HomeNGO from "../screens/HomeNGO";
 import CreateCampaignInvite from "../screens/CreateCampaignInvite";
-import { CreateCampaignNFT } from "../screens/CreateCampaignNFT";
-import { CreateCampaignNFTFinish } from "../screens/CreateCampaignNFTFinish";
+import CreateCampaignNFT from "../screens/CreateCampaignNFT";
+import CreateCampaignNFTFinish from "../screens/CreateCampaignNFTFinish";
 import React from "react";
 
 const Stack = createStackNavigator();
@@ -31,7 +31,7 @@ export default function Routes() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={"Home"}>
         <Stack.Screen
           name="Home"
           component={Home}
@@ -80,7 +80,7 @@ export default function Routes() {
             gestureEnabled: false,
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="CreateCampaignNFTFinish"
           component={CreateCampaignNFTFinish}
           options={{

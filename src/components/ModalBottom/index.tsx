@@ -1,8 +1,6 @@
-import React, { useState, ReactNode, useEffect } from "react";
-import { View, TouchableOpacity } from "react-native";
+import React, { ReactNode } from "react";
+import { View } from "react-native";
 import Modal from "react-native-modal";
-import Wrapper from "../../layouts/wrapper";
-import colors from "tailwindcss/colors";
 import WrapperNotScroll from "../../layouts/wrapperNotScroll";
 
 interface ModalBottomProps {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 import Wrapper from "../layouts/wrapper";
 import GoBack from "../components/GoBack";
@@ -6,8 +6,6 @@ import H6 from "../components/Titles/H6";
 import Input from "../components/Input";
 import { SubButton } from "../components/SubButton";
 import { Button } from "../components/Button";
-import GetAllStorageCreateUser from "../hooks/useGetAllStorageCreateUser";
-import GetAllStorageCreateNGO from "../hooks/useGetAllStorageCreateNGO";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState(null);

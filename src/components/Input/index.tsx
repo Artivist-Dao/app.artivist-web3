@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { TextInput, View, Text, TouchableOpacity } from "react-native";
 import InputMask from "react-native-mask-input";
-import { default as Mask } from "../../utils/custom/input-mask";
+import Mask, { Mask as MaskType } from "../../utils/custom/input-mask";
 import { Feather } from "@expo/vector-icons";
-import colors from "tailwindcss/colors";
 
 interface InputProps {
   type?: "text" | "number";
@@ -20,7 +19,6 @@ interface InputProps {
   minLength?: number;
   readonly?: boolean;
   hasError?: boolean;
-  maskType?: (string | RegExp)[];
   onChangeText?: (masked: string, unmasked: string) => void;
   secureTextEntry?: boolean;
   messageError?: string;
@@ -39,12 +37,12 @@ const Input: React.FC<InputProps> = ({
   readonly = false,
   hasError = false,
   onChangeText,
-  maskType,
   secureTextEntry,
   messageError,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [select, setSelect] = useState(false);
+
   const handleFocus = () => {
     setSelect(true);
   };
@@ -52,11 +50,13 @@ const Input: React.FC<InputProps> = ({
   const handleBlur = () => {
     setSelect(false);
   };
+
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
   let inputElement;
+
   if (placeholder === "Description") {
     inputElement = (
       <View className="mb-4">
@@ -105,7 +105,6 @@ const Input: React.FC<InputProps> = ({
           readOnly={readonly}
           maxLength={maxLength}
           value={value}
-          mask={Mask(maskType)}
           onChangeText={onChangeText}
           secureTextEntry={!showPassword && secureTextEntry}
           placeholder={placeholder}
@@ -147,7 +146,6 @@ const Input: React.FC<InputProps> = ({
           readOnly={readonly}
           maxLength={maxLength}
           value={value}
-          mask={Mask(maskType)}
           onChangeText={onChangeText}
           secureTextEntry={!showPassword && secureTextEntry}
           placeholder={placeholder}
