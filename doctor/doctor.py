@@ -7,6 +7,14 @@ from datetime import datetime
 OUTPUT_FILE = "doctor_report.txt"
 ANDROID_DIR = "android"
 
+# Contadores para o dashboard
+TOTAL_CHECKS = 0
+SUCCESS_COUNT = 0
+FAILURE_COUNT = 0
+
+# Lista de comandos executados
+executed_commands = []
+
 # Função para imprimir mensagens com ícones e redirecionar para o arquivo
 def print_message(color, icon, message):
     with open(OUTPUT_FILE, "a") as file:
@@ -16,21 +24,27 @@ def print_message(color, icon, message):
 
 # Função para verificar se um comando falhou e redirecionar para o arquivo
 def check_failure(returncode):
+    global FAILURE_COUNT
     if returncode != 0:
         print_message("\033[91m", "❌", "Falha detectada. Saindo...")
+        FAILURE_COUNT += 1
         exit(1)
 
 # Função para executar comandos e redirecionar para o arquivo
 def execute_command(command):
+    global SUCCESS_COUNT, TOTAL_CHECKS
     print_message("\033[94m", "ℹ️", f"Executando '{command}'...")
+    executed_commands.append(command)
     with open(OUTPUT_FILE, "a") as file:
         file.write(f"{datetime.now()} - Executando '{command}'...\n")
-    result = subprocess.run(command, shell=True, check=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, encoding="utf-8", errors="ignore")
-    if result.returncode == 0:
+    try:
+        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, encoding="utf-8", errors="ignore")
         print_message("\033[92m", "✅", f"{result.stdout.strip()}")
-    else:
-        print_message("\033[91m", "❌", f"{result.stdout.strip()}")
-    check_failure(result.returncode)
+        SUCCESS_COUNT += 1
+    except subprocess.CalledProcessError as e:
+        print_message("\033[91m", "❌", f"{e.output.strip()}")
+        check_failure(e.returncode)
+    TOTAL_CHECKS += 1
 
 # Verifica se ANDROID_HOME está configurado
 def check_android_home():
@@ -81,6 +95,14 @@ def main():
     # Verifica se ANDROID_HOME está configurado
     if check_android_home():
         check_args()
+
+    # Exibir o dashboard
+    print("\n\nDashboard:\n")
+    print("-------------------------------------------")
+    print(f" Total de Verificações:       {TOTAL_CHECKS}")
+    print(f" Verificações Bem-Sucedidas: {SUCCESS_COUNT}")
+    print(f" Verificações com Falha:     {FAILURE_COUNT}")
+    print("-------------------------------------------")
 
     print_message("\033[92m", "✅", "Verificação concluída com sucesso!")
 
