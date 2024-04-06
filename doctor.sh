@@ -37,15 +37,38 @@ check_failure() {
     fi
 }
 
-# Função para executar tarefas do Gradle e redirecionar para o arquivo
-execute_gradle_task() {
-    local task=$1
-    print_message "$BLUE" "$INFO_ICON" "Executando '$task'..."
-    ./gradlew $task | tee -a $OUTPUT_FILE
+# Função para executar comandos e redirecionar para o arquivo
+execute_command() {
+    local command=$1
+    print_message "$BLUE" "$INFO_ICON" "Executando '$command'..."
+    eval $command | tee -a $OUTPUT_FILE
     check_failure
 }
 
-print_message "$YELLOW" "$INFO_ICON" "Iniciando a verificação do ambiente do projeto Android..."
+# Executa o passo a passo para resolver problemas de compilação
+run_build_fix_steps() {
+    print_message "$YELLOW" "$INFO_ICON" "Iniciando o passo a passo para correção de erros de compilação..."
+
+    execute_command "cd android && ./gradlew clean"
+    execute_command "cd .. && npm install"
+    execute_command "cd android && ./gradlew assembleDebug"
+    execute_command "cd .."
+}
+
+# Exibe a ajuda do script
+print_help() {
+    echo "Uso: ./doctor.sh [opção]"
+    echo "Opções disponíveis:"
+    echo "  fix-build   Executa uma série de comandos para tentar corrigir erros de compilação"
+    echo "  --help      Mostra esta mensagem de ajuda"
+    echo "Se nenhum argumento for fornecido, o script executará verificações padrões no ambiente de desenvolvimento."
+}
+
+# Verifica se o argumento --help foi fornecido
+if [ "$1" == "--help" ]; then
+    print_help
+    exit 0
+fi
 
 # Verifica se ANDROID_HOME está configurado
 if [ -z "$ANDROID_HOME" ]; then
@@ -55,18 +78,26 @@ else
     print_message "$GREEN" "$CHECK_ICON" "ANDROID_HOME está configurado em: $ANDROID_HOME"
 fi
 
-# Muda para o diretório android do projeto
-cd $ANDROID_DIR
-check_failure
+# Verifica se o script foi chamado com um parâmetro específico para corrigir erros de compilação
+if [ "$1" == "fix-build" ]; then
+    run_build_fix_steps
+else
+    # Executa as verificações padrões
+    print_message "$YELLOW" "$INFO_ICON" "Iniciando a verificação do ambiente do projeto Android..."
 
-# Executa tarefas do Gradle
-execute_gradle_task "tasks"
-execute_gradle_task "clean"
-execute_gradle_task "assembleDebug"
-execute_gradle_task "lint"
-execute_gradle_task "test"
+    # Muda para o diretório android do projeto
+    cd $ANDROID_DIR
+    check_failure
 
-# Voltar para o diretório original
-cd -
+    # Executa tarefas do Gradle
+    execute_command "./gradlew tasks"
+    execute_command "./gradlew clean"
+    execute_command "./gradlew assembleDebug"
+    execute_command "./gradlew lint"
+    execute_command "./gradlew test"
+
+    # Voltar para o diretório original
+    cd -
+fi
 
 print_message "$GREEN" "$CHECK_ICON" "Verificação concluída com sucesso!"
