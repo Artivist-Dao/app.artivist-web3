@@ -24,8 +24,12 @@ def check_failure(returncode):
 def execute_command(command):
     print_message("\033[94m", "ℹ️", f"Executando '{command}'...")
     with open(OUTPUT_FILE, "a") as file:
-        file.write(f"Executando '{command}'...\n")
+        file.write(f"{datetime.now()} - Executando '{command}'...\n")
     result = subprocess.run(command, shell=True, check=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, encoding="utf-8", errors="ignore")
+    if result.returncode == 0:
+        print_message("\033[92m", "✅", f"{result.stdout.strip()}")
+    else:
+        print_message("\033[91m", "❌", f"{result.stdout.strip()}")
     check_failure(result.returncode)
 
 # Verifica se ANDROID_HOME está configurado
