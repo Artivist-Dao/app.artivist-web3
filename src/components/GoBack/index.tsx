@@ -6,10 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 export default function GoBack({ navigation }) {
   return (
     <TouchableOpacity
-    style={{
-   
-      alignSelf: "flex-start",
-    }}
+    style={{alignSelf: "flex-start"}}
     className="rounded-xl p-2 bg-branco items-center justify-center"
     onPress={navigation.goBack}
   >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Button } from "../components/Button";
 import Wrapper from "../layouts/wrapper";
@@ -25,6 +25,9 @@ export function HomeNGO({ navigation }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [selectId, setSelectId] = useState(1);
+  const [nameArtist, setNameArtist] = useState("");
+  const [pictureArtist, setPictureArtist] = useState("");
+  const [pictureNGO, setPictureNGO] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -41,19 +44,30 @@ export function HomeNGO({ navigation }) {
       const response = await GetAllStorageCreateNGO();
       setCorporatePhoto(response.picture);
       setCorporateName(response.corporateName);
-      setAddress(response.address);
-      setPostalCode(response.postalCode);
+      setAddress(response.city);
+      setPostalCode(response.country);
       setPhoneNumber(response.phoneNumber);
       setDescription(response.description);
     } catch (error) {
       console.error("Erro ao obter o dados:", error);
     }
   };
+  const getStorageCreateCampaign = async () => {
+    setNameArtist(await AsyncStorage.getItem("nameArtistsCreateCampaign"));
+    setPictureNGO(await AsyncStorage.getItem("pictureNftCreateCampaign"));
+    setPictureArtist(
+      await AsyncStorage.getItem("pictureArtistsCreateCampaign")
+    );
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       getAllStorageCreateNGO();
     }, [navigation])
   );
+  useEffect(() => {
+    getStorageCreateCampaign();
+  }, []);
   const handleSearch = (unmasked) => {
     setSearch(unmasked);
   };
@@ -96,6 +110,67 @@ export function HomeNGO({ navigation }) {
         <View>
           <Text className="text-dark1 font-bold text-lg mb-2">Campaigns</Text>
           <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+         
+            <View>
+            {pictureNGO && (
+            
+              <View className="w-60 h-60 relative mr-6">
+                <Image
+                  className="h-full w-full rounded-2xl"
+                  source={{
+                    uri: pictureNGO,
+                  }}
+                />
+                <LinearGradient
+                  colors={["rgba(0,0,0,0.9)", "rgba(0,0,0,0.0)", "transparent"]}
+                  start={{ x: 0.5, y: 1 }}
+                  end={{ x: 0.5, y: 0 }}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 16,
+                  }}
+                />
+              </View>
+            )}
+              <View className="absolute right-6">
+                <View
+                  className="bg-maindark"
+                  style={{
+                    borderTopRightRadius: 16,
+                    borderBottomRightRadius: 16,
+                    borderBottomLeftRadius: 16,
+                    alignSelf: "flex-start",
+                  }}
+                >
+                  <Text className="text-lg text-branco font-bold py-4 px-8 ">
+                    NEW
+                  </Text>
+                </View>
+              </View>
+              <View className="items-center flex-row absolute bottom-2 left-2">
+                <Image
+                  className="w-12 h-12 rounded-full"
+                  source={{
+                    uri: pictureArtist,
+                  }}
+                />
+                <View className="">
+                  <Text className="ml-2 text-base font-bold text-branco">
+                    {nameArtist}
+                  </Text>
+                  <Text className="ml-2 text-sm font-medium text-branco">
+                    Name artist for NGO
+                  </Text>
+                </View>
+              </View>
+            </View>
+
             <View>
               <View className="w-60 h-60 relative">
                 <Image
@@ -331,11 +406,11 @@ export function HomeNGO({ navigation }) {
               <View className="items-center flex-row absolute bottom-2 left-2 ml-6">
                 <View className="w-12 h-12 items-center justify-center bg-pink-500 rounded-full">
                   <Text className="text-center text-3xl font-extrabold text-pink-300">
-                   F
+                    F
                   </Text>
                 </View>
                 <Text className="ml-2 text-base font-bold text-branco">
-                  Feminism 
+                  Feminism
                 </Text>
               </View>
             </View>
@@ -362,7 +437,7 @@ export function HomeNGO({ navigation }) {
                 onPress={() => navigation.navigate("ProfileNGO")}
               >
                 <Feather name="user" size={24} color="#191919" />
-                <Subtitle ClassName="ml-6 w-20" Title={"Profile"} />
+                <Subtitle ClassName="ml-6 w-60 justify-center items-center" Title={"Profile"} />
               </TouchableOpacity>
               <View className="h-1  bg-cinza2 w-full rounded-full"></View>
               <TouchableOpacity
@@ -370,7 +445,7 @@ export function HomeNGO({ navigation }) {
                 onPress={() => handleLogout()}
               >
                 <Feather name="log-out" size={24} color="#F44A4A" />
-                <Subtitle ClassName="ml-6 text-error w-20" Title={"Logout"} />
+                <Subtitle ClassName="ml-6 text-error w-60" Title={"Logout"} />
               </TouchableOpacity>
             </View>
           </ModalBottom>

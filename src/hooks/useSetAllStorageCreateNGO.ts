@@ -3,16 +3,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default async function SetAllStorageCreateNGO({
   picture,
   corporateName,
-  address,
-  postalCode,
+  city,
+  country,
   phoneNumber,
   description,
 }: AllStorageProps): Promise<void> {
   try {
     await AsyncStorage.setItem("picture", picture);
     await AsyncStorage.setItem("corporateName", corporateName);
-    await AsyncStorage.setItem("address", address);
-    await AsyncStorage.setItem("postalCode", postalCode);
+    await AsyncStorage.setItem("city", city);
+    await AsyncStorage.setItem("country", country);
     await AsyncStorage.setItem("phoneNumber", phoneNumber);
     await AsyncStorage.setItem("description", description);
   } catch (error) {

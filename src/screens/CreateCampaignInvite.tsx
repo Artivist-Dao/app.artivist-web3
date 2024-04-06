@@ -147,6 +147,7 @@ export default function CreateCampaignInvite({ navigation }) {
             maxLength={40}
           />
         </View>
+        
         {search !== "" && (
           <>
             {filteredArtists.map((artist, index) => (
