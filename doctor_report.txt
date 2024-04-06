@@ -1,0 +1,8 @@
+Relatório do Doctor Script - 2024-04-06 12:41:52.746954
+[93mℹ️ Iniciando as verificações...
+[92m✅ ANDROID_HOME está configurado em: /Users/gosouza/Library/Android/sdk
+[92m✅ ANDROID_CONFIG: OK
+[92m✅ EXPO: OK
+[92m✅ EXPO_NGROK: OK
+[92m✅ COMPATIBLE_VERSION_OF_GRADLE_WITH_JAVA: OK
+[92m✅ CHECK_ENV_VARIABLES: OK

@@ -18,17 +18,6 @@ import React from "react";
 const Stack = createStackNavigator();
 
 export default function Routes() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={"Home"}>
