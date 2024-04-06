@@ -1,55 +1,91 @@
-﻿# APP MOBILE WEB3
+﻿
+# APP MOBILE WEB3
 
-npm install -g expo-cli
-npm install -g @expo/ngrok@4.1.0
-npm cache clean --force
+Este projeto é uma aplicação móvel desenvolvida com tecnologia Web3 e React Native, oferecendo funcionalidades descentralizadas e avançadas para a criação de experiências de usuário inovadoras em blockchain.
 
+## Pré-requisitos
 
-npm install -g react-native-cli
-npm install -g react-native
-npm install -g react-native-web3
-npm install -g react-native-web3-provider
-npm install -g react-native-web3-dapp
-npm install -g react-native-web3-provider
+Antes de começar, certifique-se de ter instalado:
+- Node.js
+- Yarn (opcional, pode-se usar npm)
+- Expo CLI
 
-start:
+## Configuração do Ambiente
 
-npx expo start --tunnel -c
+Para configurar seu ambiente de desenvolvimento, siga estas etapas:
 
----
+1. Instale o `react-native-gesture-handler`:
+   ```
+   npm install react-native-gesture-handler
+   ```
 
-Nome do Projeto
-Este é um breve resumo do seu projeto. Descreva o que é o projeto e o que ele faz.
+2. Instale o Expo CLI e as ferramentas necessárias globalmente:
+   ```
+   npm install -g expo-cli
+   npm install -g @expo/ngrok@4.1.0
+   npm install -g eas-cli
+   ```
 
-Pré-requisitos
-Antes de começar, certifique-se de ter o seguinte instalado:
+3. Limpe o cache do npm:
+   ```
+   npm cache clean --force
+   ```
 
-Node.js
-Yarn
-Expo CLI
-Instalação
-Siga estas etapas para instalar e executar o projeto:
+4. Instale as dependências do projeto:
+   ```
+   npm install
+   ```
 
-Clone o repositório:
->
-Navegue até o diretório do projeto:
->
-Instale as dependências do projeto:
-install
-Inicie o servidor de desenvolvimento:
-c
-Agora você pode abrir o aplicativo Expo no seu telefone e escanear o código QR fornecido no terminal ou na página da web que foi aberta. Seu aplicativo deve ser carregado em seu dispositivo.
+5. Inicie o projeto com o Expo:
+   ```
+   npx expo start --tunnel -c
+   ```
 
-Contribuindo
-Pull requests são bem-vindos. Para mudanças importantes, por favor, abra uma issue primeiro para discutir o que você gostaria de mudar.
+## Construção do Aplicativo
 
-Licença
-MIT
+Para construir o aplicativo para Android, utilize o comando:
+```
+eas build --platform android
+```
 
----
+## Solução de Problemas
 
-Links Úteis :
+Em caso de problemas, você pode utilizar os seguintes comandos para diagnóstico e correção de erros:
+```
+npx expo-doctor
+npx expo install --check
+npm uninstall @types/react-native
+npx expo-doctor
+```
 
-* Repo oficial : https://github.com/Artivist-Dao/app.artivist-web3
-* Docs Expo : https://docs.expo.dev/guides/authentication/#github
-*
+## Limpeza do Cache
+
+Se necessário, limpe o cache do projeto executando:
+
+```bash
+rm -rf node_modules
+npm install # ou use yarn
+npm start --reset-cache # ou yarn start --reset-cache
+```
+
+## Instalação
+
+Para instalar e executar o projeto, siga estas etapas:
+
+1. Clone o repositório do projeto.
+2. Navegue até o diretório do projeto.
+3. Instale as dependências conforme descrito anteriormente.
+4. Inicie o servidor de desenvolvimento e abra o aplicativo Expo no seu telefone para escanear o código QR.
+
+## Contribuindo
+
+Contribuições são bem-vindas! Para mudanças significativas, abra uma issue primeiro para discutir as alterações desejadas.
+
+## Licença
+
+Este projeto está sob a licença MIT.
+
+## Links Úteis
+
+- [Repositório Oficial](https://github.com/Artivist-Dao/app.artivist-web3)
+- [Documentação do Expo](https://docs.expo.dev/guides/authentication/#github)
