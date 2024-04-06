@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useLoaderStates } from "../utils/loaderStates";
-import SetAllStorageCreateNGO from "./useSetAllStorageCreateNGO";
+import SetAllStorageCreateUser from "./useSetAllStorageCreateUser";
 
-function useCreateNGO() {
+function useCreateUser() {
   const {
     loader,
     setLoader,
@@ -14,36 +14,27 @@ function useCreateNGO() {
     setLoaderWarning,
   } = useLoaderStates();
 
-  async function handleCreateNGO(
-    picture: string,
-    corporateName: string,
-    city: string,
-    country: string,
-    phoneNumber: string,
-    description: string
+  async function handleCreateUser(
+    name: string,
+    email: string,
+    password: string
   ) {
     try {
       setLoader(true);
       const resposta = await axios.post(
-        `https://250ky.wiremockapi.cloud/creatNGO`,
+        `https://250ky.wiremockapi.cloud/json/createUser`,
         {
-          picture,
-          corporateName,
-          city,
-          country,
-          phoneNumber,
-          description
+          name,
+          email,
+          password,
         }
       );
       if (resposta.status === 201) {
         setLoaderSuccessful(true);
-        await SetAllStorageCreateNGO({
-          picture,
-          corporateName,
-          city,
-          country,
-          phoneNumber,
-          description
+        await SetAllStorageCreateUser({
+          name,
+          email,
+          password,
         });
         return 201;
       }
@@ -71,8 +62,15 @@ function useCreateNGO() {
     setLoaderSuccessful,
     loaderFailed,
     setLoaderFailed,
-    handleCreateNGO,
+    handleCreateUser,
   };
 }
 
-export default useCreateNGO;
+export default useCreateUser;
+function SetAllStorageUser(arg0: {
+  name: string;
+  email: string;
+  password: string;
+}) {
+  throw new Error("Function not implemented.");
+}

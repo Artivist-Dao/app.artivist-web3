@@ -21,8 +21,8 @@ import WrapperNotScroll from "../layouts/wrapperNotScroll";
 export function CadasterFirstAcess({ navigation }) {
   const [corporatePhoto, setCorporatePhoto] = useState<string | null>(null);
   const [coporateName, setCoporateName] = useState("");
-  const [address, setAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
@@ -43,11 +43,11 @@ export function CadasterFirstAcess({ navigation }) {
   const handleCoporateName = (unmasked) => {
     setCoporateName(unmasked);
   };
-  const handleAdress = (unmasked) => {
-    setAddress(unmasked);
+  const handleCity = (unmasked) => {
+    setCity(unmasked);
   };
-  const handlePostalCode = (unmasked) => {
-    setPostalCode(unmasked);
+  const handleCountry = (unmasked) => {
+    setCountry(unmasked);
   };
   const handlePhoneNumber = (unmasked) => {
     setPhoneNumber(unmasked);
@@ -57,16 +57,16 @@ export function CadasterFirstAcess({ navigation }) {
       if (
         corporatePhoto &&
         coporateName &&
-        address &&
-        postalCode &&
+        city &&
+        country &&
         phoneNumber &&
         description
       ) {
         await handleCreateNGO(
           corporatePhoto,
           coporateName,
-          address,
-          postalCode,
+          city,
+          country,
           phoneNumber,
           description
         );
@@ -166,17 +166,16 @@ export function CadasterFirstAcess({ navigation }) {
           maxLength={50}
         />
         <Input
-          value={address}
-          onChangeText={(masked, unmasked) => handleAdress(unmasked)}
-          placeholder="Address"
-          maxLength={50}
+          value={city}
+          onChangeText={(masked, unmasked) => handleCity(unmasked)}
+          placeholder="City"
+          maxLength={20}
         />
         <Input
-          value={postalCode}
-          onChangeText={(masked, unmasked) => handlePostalCode(unmasked)}
-          placeholder="Postal Code"
-          maskType="ZIPCODE"
-          type="number"
+          value={country}
+          onChangeText={(masked, unmasked) => handleCountry(unmasked)}
+          placeholder="Country"
+          maxLength={20}
         />
         <Input
           value={phoneNumber}
@@ -191,14 +190,15 @@ export function CadasterFirstAcess({ navigation }) {
           placeholder="Description"
           maxLength={150}
         />
+       
+      </Wrapper>
+      <View className="bg-branco absolute bottom-0 justify-center right-0 left-0">
+        <WrapperNotScroll>
         {message && (
           <Text className="text-center py-2 text-error text-sm font-light">
             {message}
           </Text>
         )}
-      </Wrapper>
-      <View className="bg-branco absolute bottom-0 justify-center right-0 left-0">
-        <WrapperNotScroll>
           <Button
             hasIcon
             styleType={2}

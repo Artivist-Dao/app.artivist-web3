@@ -13,20 +13,9 @@ import WrapperNotScroll from "../layouts/wrapperNotScroll";
 export function Home({ navigation }) {
   const [corporatePhoto, setCorporatePhoto] = useState(null);
 
-  const retrieveData = async () => {
-    try {
-      const photoFromStorage = await AsyncStorage.getItem("corporatePhoto");
-      setCorporatePhoto(photoFromStorage);
-    } catch (error) {
-      console.error(
-        "Erro ao recuperar a foto corporativa do AsyncStorage:",
-        error
-      );
-    }
-  };
   const Validation = async () => {
     const response = await GetAllStorageCreateNGO();
-    if (response.address != null) {
+    if (response.corporateName != null) {
       navigation.navigate("HomeNGO");
     } else {
       navigation.navigate("Home");

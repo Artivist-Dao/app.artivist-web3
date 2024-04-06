@@ -1,7 +1,7 @@
 interface AllStorageProps {
   corporateName: string;
-  address?: string;
-  postalCode?: string;
+  city?: string;
+  country?: string;
   phoneNumber?: string;
   description: string;
   picture: string;
@@ -9,8 +9,8 @@ interface AllStorageProps {
 
 interface StorageData {
   corporateName: string | null;
-  address: string | null;
-  postalCode: string | null;
+  city: string | null;
+  country: string | null;
   phoneNumber: string | null;
   description: string | null;
   picture: string | null;

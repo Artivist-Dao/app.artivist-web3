@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import Wrapper from "../layouts/wrapper";
 import GoBack from "../components/GoBack";
@@ -6,21 +6,24 @@ import H6 from "../components/Titles/H6";
 import Input from "../components/Input";
 import { SubButton } from "../components/SubButton";
 import { Button } from "../components/Button";
+import GetAllStorageCreateUser from "../hooks/useGetAllStorageCreateUser";
+import GetAllStorageCreateNGO from "../hooks/useGetAllStorageCreateNGO";
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [emailGet, setEmailGet] = useState(null);
+  const [passwordGet, setPasswordGet] = useState(null);
+  const [password, setPassword] = useState(null);
   const [loader, setLoader] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const [messageErrorEmail, setMessageErrorEmail] = useState("");
   const [messageErrorPassword, setMessageErrorPassword] = useState("");
+  const [messageError, setMessageError] = useState("");
 
   const handleSubmit = () => {
-    setLoader(true);
     navigation.navigate("FirstAcess");
   };
-
   const handleEmail = (unmasked) => {
     setEmail(unmasked);
     if (!unmasked.includes("@")) {
@@ -40,6 +43,7 @@ export default function Login({ navigation }) {
       setErrorPassword(false);
     }
   };
+
   return (
     <Wrapper>
       <View className="mt-8">
@@ -59,7 +63,7 @@ export default function Login({ navigation }) {
         <Input
           value={password}
           onChangeText={(masked, unmasked) => handlePassword(unmasked)}
-          maxLength={30}
+          maxLength={6}
           secureTextEntry={true}
           placeholder="Password"
           hasError={errorPassword}
@@ -67,6 +71,11 @@ export default function Login({ navigation }) {
         />
       </View>
       <View className="mt-80">
+        {messageError && (
+          <Text className="text-center text-error text-xs font-light">
+            {messageError}
+          </Text>
+        )}
         <Button
           isLoading={loader}
           className="mt-5"

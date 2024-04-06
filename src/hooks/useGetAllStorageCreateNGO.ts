@@ -3,8 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default async function GetAllStorageCreateNGO(): Promise<StorageData> {
   try {
     const corporateName = await AsyncStorage.getItem("corporateName");
-    const address = await AsyncStorage.getItem("address");
-    const postalCode = await AsyncStorage.getItem("postalCode");
+    const city = await AsyncStorage.getItem("city");
+    const country = await AsyncStorage.getItem("country");
     const phoneNumber = await AsyncStorage.getItem("phoneNumber");
     const description = await AsyncStorage.getItem("description");
     const picture = await AsyncStorage.getItem("picture");
@@ -12,8 +12,8 @@ export default async function GetAllStorageCreateNGO(): Promise<StorageData> {
     return {
       picture: picture,
       corporateName: corporateName,
-      address: address,
-      postalCode: postalCode,
+      city: city,
+      country: country,
       phoneNumber: phoneNumber,
       description: description,
     };
@@ -21,8 +21,8 @@ export default async function GetAllStorageCreateNGO(): Promise<StorageData> {
     console.error("Erro ao obter os valores do storage:", error);
     return {
       corporateName: null,
-      address: null,
-      postalCode: null,
+      city: null,
+      country: null,
       phoneNumber: null,
       description: null,
       picture: null,
