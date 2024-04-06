@@ -39,7 +39,17 @@ Antes de começar, você precisará instalar:
 
 3. **Limpar o Cache do npm:**
    ```bash
+   npm start -- --reset-cache
+
+   cd android
+
+   ./gradlew clean
+
+
    npm cache clean --force
+
+    ./gradlew --stop
+     rm -rf $HOME/.gradle/caches/
    ```
 
 ## Execução do App
