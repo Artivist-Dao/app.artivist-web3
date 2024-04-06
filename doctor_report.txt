@@ -1,0 +1,4 @@
+Relatório do Doctor Script - Sáb  6 Abr 2024 11:12:15 -03
+ℹ️ Iniciando a verificação do ambiente do projeto Android...
+✅ ANDROID_HOME está configurado em: /Users/gosouza/Library/Android/sdk
+✅ Verificação concluída com sucesso!
