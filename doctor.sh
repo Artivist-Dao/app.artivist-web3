@@ -1,25 +1,55 @@
 #!/bin/bash
 
-# Obter o diretório atual do script
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Install the spinner package if not already installed
+pip install spinner &> /dev/null
 
-# Configurar e validar os parâmetros de entrada
+# Function to execute a command and display its output
+execute_command() {
+    local command=$1
+    echo -e "\nExecutando comando: $command\n"
+    eval $command
+}
+
+# Function to execute a command inside a spinner animation
+execute_command_with_spinner() {
+    local command=$1
+    spinner="$2"
+    echo -e "\nExecutando comando com spinner: $command\n"
+    $command & spinner_pid=$!
+    while kill -0 $spinner_pid &>/dev/null; do
+        printf "."
+        sleep 0.5
+    done
+    echo -e "\n"
+}
+
+# Configure and validate the input parameters
 if [ "$1" == "fix-build" ]; then
-    PYTHON_SCRIPT="$SCRIPT_DIR/doctor/doctor.py fix-build"
+    PYTHON_SCRIPT="./doctor/doctor.py fix-build"
 elif [ "$1" == "--help" ]; then
-    PYTHON_SCRIPT="$SCRIPT_DIR/doctor/doctor.py --help"
+    PYTHON_SCRIPT="./doctor/doctor.py --help"
 else
-    PYTHON_SCRIPT="$SCRIPT_DIR/doctor/doctor.py"
+    PYTHON_SCRIPT="./doctor/doctor.py"
 fi
 
-# Configurar os parâmetros de envio para o Python
+# Set the environment parameters for Python
 export OUTPUT_FILE="doctor_report.txt"
 export ANDROID_DIR="android"
 export CHECKS=("ANDROID_CONFIG" "EXPO" "EXPO_NGROK" "COMPATIBLE_VERSION_OF_GRADLE_WITH_JAVA" "CHECK_ENV_VARIABLES")
 export ANIMATION=true
 
-# Baixar as dependências do Python
+# Install Python dependencies
+echo -e "\nInstalando dependências Python...\n"
 pipenv install
 
-# Executar o script Python
-pipenv run python $PYTHON_SCRIPT
+# Execute the Python script with spinner animation and display the output
+execute_command_with_spinner "pipenv run python $PYTHON_SCRIPT" "bouncingBall"
+
+# Display a table of all executed commands
+echo -e "\n\nTabela de comandos executados:\n"
+echo "-------------------------------------------"
+echo " Comando                                    "
+echo "-------------------------------------------"
+echo " pipenv install                             "
+echo " pipenv run python $PYTHON_SCRIPT           "
+echo "-------------------------------------------"

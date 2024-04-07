@@ -1,36 +1,55 @@
 #!/bin/bash
 
-# Prefixo do nome do arquivo de saída
-prefixo_arquivo_saida="APP_MOBILE_WEB3"
+# Install the spinner package if not already installed
+pip install spinner &> /dev/null
 
-# Inicializa contador de arquivo
-contador_arquivo=1
+# Function to execute a command and display its output
+execute_command() {
+    local command=$1
+    echo -e "\nExecutando comando: $command\n"
+    eval $command
+}
 
-# Tamanho máximo do arquivo em kilobytes (15MB)
-max_tamanho_kb=$((15*1024))
+# Function to execute a command inside a spinner animation
+execute_command_with_spinner() {
+    local command=$1
+    spinner="$2"
+    echo -e "\nExecutando comando com spinner: $command\n"
+    $command & spinner_pid=$!
+    while kill -0 $spinner_pid &>/dev/null; do
+        printf "."
+        sleep 0.5
+    done
+    echo -e "\n"
+}
 
-# Inicia um novo arquivo de saída
-arquivo_saida="${prefixo_arquivo_saida}_${contador_arquivo}.txt"
-> "$arquivo_saida"
+# Configure and validate the input parameters
+if [ "$1" == "type" ]; then
+    PYTHON_SCRIPT="./export/export.py fix-build"
+elif [ "$1" == "--help" ]; then
+    PYTHON_SCRIPT="./export/export.py --help"
+else
+    PYTHON_SCRIPT="./export/export.py"
+fi
 
-# Processa cada arquivo
-find . -type f -print0 | while IFS= read -r -d '' file; do
-    tamanho_arquivo_kb=$(du -k "$file" | cut -f1)
+# Set the environment parameters for Python
+export OUTPUT_FILE="export_report.txt"
+export ANDROID_DIR="android"
+export ANIMATION=true
 
-    # Verifica se é necessário iniciar um novo arquivo devido ao tamanho
-    tamanho_atual_kb=$(du -k "$arquivo_saida" | cut -f1)
-    if [ $((tamanho_atual_kb + tamanho_arquivo_kb)) -ge $max_tamanho_kb ]; then
-        contador_arquivo=$((contador_arquivo+1))
-        arquivo_saida="${prefixo_arquivo_saida}_${contador_arquivo}.txt"
-        > "$arquivo_saida"
-    fi
+# Install Python dependencies
+echo -e "\nInstalando dependências Python...\n"
+pipenv install
 
-    # Adiciona o conteúdo do arquivo ao arquivo de saída
-    echo "Caminho do arquivo: $file" >> "$arquivo_saida"
-    echo "Conteúdo do arquivo:" >> "$arquivo_saida"
-    cat "$file" >> "$arquivo_saida"
-    echo -e "\n\n" >> "$arquivo_saida"
+# Execute the Python script with spinner animation and display the output
+execute_command_with_spinner "pipenv run python $PYTHON_SCRIPT" "bouncingBall"
 
-done
+# Display a table of all executed commands
+echo -e "\n\nTabela de comandos executados:\n"
+echo "-------------------------------------------"
+echo " Comando                                    "
+echo "-------------------------------------------"
+echo " pipenv install                             "
+echo " pipenv run python $PYTHON_SCRIPT           "
+echo "-------------------------------------------"
 
-echo "Conteúdo dos arquivos exportado para arquivos iniciando com $prefixo_arquivo_saida"
