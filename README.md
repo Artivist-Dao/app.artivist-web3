@@ -1,26 +1,26 @@
-# Guia de Configuração e Execução do APP MOBILE WEB3 para MAC
+# Configuration and Execution Guide for WEB3 MOBILE APP on MAC
 
-Este guia destina-se a auxiliar iniciantes na configuração e execução do projeto APP MOBILE WEB3 em um ambiente Mac, detalhando cada passo necessário para um setup eficaz.
+This guide is intended to assist beginners in configuring and running the WEB3 MOBILE APP project in a Mac environment, detailing each necessary step for an effective setup.
 
-## Índice
-- [Pré-requisitos](#pré-requisitos)
-- [Configuração do Ambiente](#configuração-do-ambiente)
-- [Execução do App](#execução-do-app)
-- [Geração de APK](#geração-de-apk)
-- [Problemas Comuns e Soluções](#problemas-comuns-e-soluções)
-- [Alteração da Versão do Java](#alteração-da-versão-do-java)
-- [Configuração do Android Studio](#configuração-do-android-studio)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Environment Configuration](#environment-configuration)
+- [App Execution](#app-execution)
+- [APK Generation](#apk-generation)
+- [Common Issues and Solutions](#common-issues-and-solutions)
+- [Changing Java Version](#changing-java-version)
+- [Android Studio Configuration](#android-studio-configuration)
+- [Contribution](#contribution)
+- [License](#license)
 
-## Pré-requisitos
-Certifique-se de ter instalado:
+## Prerequisites
+Make sure you have installed:
 - Node.js
-- Yarn (opcional, npm também é suportado)
+- Yarn (optional, npm is also supported)
 - Expo CLI
 
-## Configuração do Ambiente
-1. **Instalar Dependências do React Native:**
+## Environment Configuration
+1. **Install React Native Dependencies:**
    ```bash
    rm -rf node_modules
    npm install -g react-native-cli
@@ -32,14 +32,14 @@ Certifique-se de ter instalado:
    ./gradlew wrapper --gradle-version=8.7 --distribution-type=all
    ```
 
-2. **Instalar o Expo CLI e Ferramentas Relacionadas:**
+2. **Install Expo CLI and Related Tools:**
    ```bash
    npm install -g expo-cli
    npm install -g @expo/ngrok@4.1.0
    npm install -g eas-cli
    ```
 
-3. **Limpar Cache do npm e Gradle:**
+3. **Clear npm and Gradle Cache:**
    ```bash
    npm start -- --reset-cache
    cd android
@@ -49,38 +49,38 @@ Certifique-se de ter instalado:
    rm -rf $HOME/.gradle/caches/
    ```
 
-## Execução do App
-- **Iniciar o Projeto com Expo:**
+## App Execution
+- **Start the Project with Expo:**
   ```bash
   npx expo start --tunnel -c
   ```
-- **Executar Localmente para Android:**
+- **Run Locally for Android:**
   ```bash
   npx eas build --local -p android
   ```
 
-## Uso do Comando Doctor
+## Doctor Command Usage
 
-Em caso de problemas na configuração do APP, execute o comando ./doctor. Este comando executa uma série de verificações e ações automatizadas para identificar e corrigir problemas comuns, como configurações de ambiente, compatibilidade de versões do Gradle com Java, entre outros. O comando ./doctor realiza as seguintes ações:
+In case of issues with the APP configuration, execute the ./doctor command. This command runs a series of checks and automated actions to identify and fix common problems, such as environment settings, Gradle versions compatibility with Java, among others. The ./doctor command performs the following actions:
 
-Verifica a configuração do ambiente Android (ANDROID_HOME).
-Executa comandos do Gradle para limpar, compilar e testar o projeto.
-Verifica a instalação e configuração do Expo e Expo Ngrok.
-Script do Doctor:
+Checks Android environment configuration (ANDROID_HOME).
+Runs Gradle commands to clean, compile, and test the project.
+Checks Expo and Expo Ngrok installation and configuration.
+Doctor Script:
 
 ```bash
 ./doctor
 ```
 
-## Geração de APK
-Siga os passos abaixo para gerar um APK:
-1. Instalar eas-cli:
+## APK Generation
+Follow the steps below to generate an APK:
+1. Install eas-cli:
    ```bash
    npm install -g eas-cli
    eas login
    eas build:configure
    ```
-2. Configurar `eas.json`:
+2. Configure `eas.json`:
    ```json
    "preview": {
       "android": {
@@ -88,43 +88,43 @@ Siga os passos abaixo para gerar um APK:
       }
    },
    ```
-3. Iniciar o build:
+3. Start the build:
    ```bash
    eas build -p android --profile preview
    ```
 
-## Problemas Comuns e Soluções
-- **DeprecationWarning do Punycode:**
-  - Solução: Substitua o uso de `punycode` ou atualize pacotes dependentes.
-- **Incompatibilidade de Versões do Gradle e Java:**
-  - Solução: Verifique e sincronize as versões do Java e Gradle.
-- **Problemas ao Inicializar o Gradle:**
-  - Solução: Execute `gradle init` e configure o projeto Gradle.
-- **Dificuldades com o Expo:**
-  - Solução: Verifique a configuração do Expo CLI e a conectividade de rede.
+## Common Issues and Solutions
+- **Punycode DeprecationWarning:**
+  - Solution: Replace the usage of `punycode` or update dependent packages.
+- **Gradle and Java Version Incompatibility:**
+  - Solution: Check and synchronize Java and Gradle versions.
+- **Issues Initializing Gradle:**
+  - Solution: Execute `gradle init` and configure the Gradle project.
+- **Expo Troubles:**
+  - Solution: Check Expo CLI configuration and network connectivity.
 
-## Alteração da Versão do Java
-Para alterar a versão do Java, siga as etapas abaixo:
-1. Verifique o ambiente com:
+## Changing Java Version
+To change the Java version, follow the steps below:
+1. Verify the environment with:
    ```bash
    npx expo-doctor
    ```
-2. Instale e selecione a versão desejada do Java:
+2. Install and select the desired Java version:
    ```bash
    sdk install java 11.0.22-amzn
    sdk use java 11.0.22-amzn
    ```
 
-## Configuração do Android Studio
-Configure o Android Studio com os seguintes comandos:
+## Android Studio Configuration
+Configure Android Studio with the following commands:
 ```bash
 echo 'export ANDROID_HOME=/Users/<username>/Library/Android/sdk' >> ~/.zshrc
 echo 'export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-## Contribuição
-Contribuições são sempre bem-vindas. Para mudanças significativas, abra uma issue primeiro para discutir o que você gostaria de mudar.
+## Contribution
+Contributions are always welcome. For significant changes, open an issue first to discuss what you would like to change.
 
-## Licença
-Este projeto está licenciado sob a MIT License.
+## License
+This project is licensed under the MIT License.
