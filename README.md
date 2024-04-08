@@ -2,6 +2,10 @@
 
 This guide is intended to assist beginners in configuring and running the WEB3 MOBILE APP project in a Mac environment, detailing each necessary step for an effective setup.
 
+<div id="header" align="center">
+  <img src="./App.gif" width="50%"/>
+</div>
+
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Environment Configuration](#environment-configuration)
