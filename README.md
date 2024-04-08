@@ -1,4 +1,4 @@
-# Configuration and Execution Guide for WEB3 MOBILE APP on MAC
+# Artivist WEB3 MOBILE APP
 
 This guide is intended to assist beginners in configuring and running the WEB3 MOBILE APP project in a Mac environment, detailing each necessary step for an effective setup.
 
