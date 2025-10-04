@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.artivist.dapp.Artivistweb3att"
     },
     "android": {
       "adaptiveIcon": {

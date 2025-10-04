@@ -1,0 +1,46 @@
+name: EAS Build and Submit
+
+on:
+  push:
+    branches:
+      - main
+  # To trigger this workflow manually, uncomment the following lines:
+  # workflow_dispatch:
+
+jobs:
+  build-and-submit:
+    name: Install, Build and Submit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must add an EXPO_TOKEN secret to this repository."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build with EAS
+        run: eas build --platform all --profile production --non-interactive
+
+      - name: Submit to stores
+        # This step automatically submits the latest build to the stores.
+        # Be aware that running this on every push to `main` might not be desired.
+        # Consider changing the trigger to `workflow_dispatch` for manual runs.
+        run: eas submit --platform all --profile production --latest --non-interactive
